@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+<p style="border: 1px solid; width: 20%; padding: 40px">
+    <b>Order ID: </b> {{ id }}<br>
+    <b>Recipient Name: </b> {{ recpName }}<br>
+    <b>Date of Transaction: </b> {{ currentDate }}<br><br>
+    
+    {% for i in items %}
+    {{ i[0] }} × {{ i[1] }} = {{ i[2] }}<br>
+    {% endfor %}
+    <br>
+    Total = {{ price }}
+</p>
+
+{% endblock %}

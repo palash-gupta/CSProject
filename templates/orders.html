@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+{% block body %}
+<table>
+    <thead>
+        <th>Order ID</th>
+        <th>Recipient Name</th>
+        <th>Transaction Date</th>
+        <th>Items Ordered</th>
+    </thead>
+    <tbody>
+        {% for i in lst %}
+        <tr>
+            <td rowspan="{{ i[3]|length + 1 }}">{{ i[0] }}</td>
+            <td rowspan="{{ i[3]|length + 1 }}">
+            <a href="/receipt/{{ i[0] }}/">
+                {{ i[1] }}
+            </a>
+            </td>
+            <td rowspan="{{ i[3]|length + 1 }}">{{ i[2] }}</td>
+            {% for j in i[3] %}
+            <tr>
+                <td>{{ j[0] }}</td>
+            </tr>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
