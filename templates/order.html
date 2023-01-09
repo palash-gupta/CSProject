@@ -8,7 +8,7 @@
 
     <div class="flex-container">
         {% for i in availableItems %}
-        <div>
+        <div style="background-color: rgba(50, 205, 50, 0.9);">
             <img src="/static/images/{{ i[1] }}.jpg" style="max-width: 180px;">
             <label for="{{ i[1] }}">{{ i[1] }} (₹{{ i[2] }}): </label>
             <input type="number" name="{{ i[0] }}" min="0" step="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" value="0">
@@ -21,9 +21,9 @@
     <h2>Out Of Stock:</h2>
     <div class="flex-container">
     {% for i in outOfStock %}
-        <div>
+        <div style="background-color: rgba(255, 100, 100, 0.9)">
             <img src="/static/images/{{ i[1] }}.jpg" style="max-width: 200px;">
-            <h4 style="color: red;">{{ i[1] }} </h4>
+            <h4>{{ i[1] }} </h4>
         </div>
     {% endfor %}
     </div>
