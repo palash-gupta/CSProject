@@ -74,15 +74,21 @@ def orderSubmit():
                 reqdInventory[j[0]] = j[1] * int(requestForm[i])
 
     for i in currentInventory:
-        if int(i[1]) < int(reqdInventory[i[0]]):
-            return render_template_string("<script>alert('Items out of stock!'); window.history.back();</script>")
+        try:
+            if int(i[1]) < int(reqdInventory[i[0]]):
+                return render_template_string("<script>alert('Items out of stock!'); window.history.back();</script>")
+        except KeyError:
+            continue
     
     id = randint(1000000, 10000000)
     currentDate = date.today().strftime("%Y-%m-%d")
     recpName = requestForm["recipientName"]
 
     for i in currentInventory:
-        cursor.execute(f"UPDATE inventory SET Stock = {i[1] - reqdInventory[i[0]]} WHERE ID = {i[0]};")
+        try:
+            cursor.execute(f"UPDATE inventory SET Stock = {i[1] - reqdInventory[i[0]]} WHERE ID = {i[0]};")
+        except:
+            continue
 
     cursor.execute(f"INSERT INTO orders VALUES ({id}, '{recpName}', '{currentDate}')")
     for i in list(requestForm.keys())[1:]:
@@ -138,7 +144,7 @@ def menu():
 @app.route("/orders/")
 def orders():
     global cursor
-    cursor.execute("SELECT ID, Recipient, TransactionDate FROM orders;")
+    cursor.execute("SELECT ID, Recipient, TransactionDate FROM orders ORDER BY TransactionDate;")
     lst = []
     for i in cursor.fetchall():
         cursor.execute(f"SELECT ItemName FROM ordered_items, sale_items WHERE sale_items.ID = ordered_items.Item AND ordered_items.ID = {i[0]};")
